@@ -29,6 +29,7 @@ import * as Utils from './utils';
 export const createProject = def(
   'createProject :: () -> Project',
   () => ({
+    '@@type': 'xod-project/Project',
     authors: [],
     description: '',
     license: '',

@@ -55,13 +55,16 @@ const optionalPatchFields = {
   description: '',
 };
 
+// TODO: keep DRY
 export const addMissingOptionsToPatchFileContents = R.compose(
   R.evolve({
     nodes: R.map(XP.addMissingOptionalNodeFields),
+    links: R.map(XP.addMissingOptionalLinkFields),
   }),
   R.merge(optionalPatchFields)
 );
 
+// TODO: keep DRY
 export const omitDefaultOptionsFromPatchFileContents = R.compose(
   R.evolve({
     nodes: R.map(XP.omitEmptyOptionalNodeFields),
@@ -69,7 +72,9 @@ export const omitDefaultOptionsFromPatchFileContents = R.compose(
   XF.subtractObject(optionalPatchFields)
 );
 
+// TODO: Keep DRY
 const OPTIONAL_PROJECT_FIELDS = {
+  '@@type': 'xod-project/Project',
   description: '',
   license: '',
   version: '0.0.0',
