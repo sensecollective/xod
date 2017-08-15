@@ -140,19 +140,6 @@ export const loadProjectWithLibs = (projectPath, workspace, libWorkspace = works
     ));
 };
 
-// :: Project -> Project
-const injectTypeInfo = R.compose(
-  R.over(R.lensProp('patches'), R.map(
-    R.compose(
-      R.over(R.lensProp('nodes'), R.map(R.assoc('@@type', 'xod-project/Node'))),
-      R.over(R.lensProp('links'), R.map(R.assoc('@@type', 'xod-project/Link'))),
-      R.assoc('@@type', 'xod-project/Patch')
-    )
-  )),
-  R.assoc('@@type', 'xod-project/Project')
-);
-
-
 // :: Path -> Promise Project Error
 //
 // Loads a regular XOD project placed in a workspace. The workspace and project
@@ -165,7 +152,7 @@ export const loadProject = projectPath =>
     .then(workspace => [path.relative(workspace, projectPath), workspace])
     .then(R.apply(loadProjectWithLibs))
     .then(({ project, libs }) => pack(project, libs))
-    .then(injectTypeInfo)
+    .then(XP.injectProjectTypeHints)
     .then(XP.resolveNodeTypesInProject);
 
 export default {

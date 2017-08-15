@@ -131,6 +131,23 @@ export const isValidProject = R.compose(
   validateProject
 );
 
+/**
+ * Adds proper fields to the a project data object that speed up type checking.
+ */
+export const injectProjectTypeHints = def(
+  'injectTypeHints :: Project -> Project',
+  R.compose(
+    R.over(R.lensProp('patches'), R.map(
+      R.compose(
+        R.over(R.lensProp('nodes'), R.map(R.assoc('@@type', 'xod-project/Node'))),
+        R.over(R.lensProp('links'), R.map(R.assoc('@@type', 'xod-project/Link'))),
+        R.assoc('@@type', 'xod-project/Patch')
+      )
+    )),
+    R.assoc('@@type', 'xod-project/Project')
+  )
+);
+
 // =============================================================================
 //
 // Patches
