@@ -27,7 +27,7 @@ export const convertProjectFileContentsToProject = def(
 export const convertPatchToPatchFileContents = def(
   'convertPatchToPatchFileContents :: Patch -> PatchFileContents',
   R.compose(
-    R.dissoc('@@type'),
+    XF.omitTypeHints,
     R.dissoc('attachments'),
     R.dissoc('impls'),
     R.dissoc('path'),

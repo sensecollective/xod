@@ -1,6 +1,11 @@
 import R from 'ramda';
 import { Either } from 'ramda-fantasy';
-import { foldEither, explodeEither, validateSanctuaryType } from 'xod-func-tools';
+import {
+  foldEither,
+  explodeEither,
+  validateSanctuaryType,
+  omitTypeHints,
+} from 'xod-func-tools';
 
 import { getPatchPath } from './patch';
 import {
@@ -49,6 +54,7 @@ export const toXodball = def(
   'toXodball :: Project -> String',
   R.compose(
     p => JSON.stringify(p, null, 2),
+    omitTypeHints,
     omitEmptyOptionalProjectFields,
     R.converge(
       omitPatches,
