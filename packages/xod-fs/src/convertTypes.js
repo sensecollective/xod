@@ -43,8 +43,8 @@ export const convertPatchFileContentsToPatch = def(
   'convertPatchFileContentsToPatch :: PatchFileContents -> Patch',
   fsPatch => R.compose(
     XF.explodeEither,
-    XP.upsertLinks(fsPatch.links),
-    XP.upsertNodes(fsPatch.nodes),
+    XP.upsertLinks(R.map(R.assoc('@@type', 'xod-project/Link'), fsPatch.links)),
+    XP.upsertNodes(R.map(R.assoc('@@type', 'xod-project/Node'), fsPatch.nodes)),
     XP.upsertComments(fsPatch.comments),
     XP.setPatchDescription(fsPatch.description),
     XP.createPatch
@@ -61,7 +61,6 @@ const optionalPatchFields = {
 export const addMissingOptionsToPatchFileContents = R.compose(
   R.evolve({
     nodes: R.map(XP.addMissingOptionalNodeFields),
-    links: R.map(XP.addMissingOptionalLinkFields),
   }),
   R.merge(optionalPatchFields)
 );
