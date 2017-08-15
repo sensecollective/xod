@@ -94,7 +94,8 @@ export const Model = R.curry(
     packageName,
     docUrl,
     typeName,
-    R.either(
+    R.ifElse(
+      R.has('@@type'),
       R.propEq('@@type', qualifiedTypeName(packageName, typeName)),
       hasType($.RecordType(schema))
     )
