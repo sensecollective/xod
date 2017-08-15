@@ -383,6 +383,5 @@
       ],
       "@@type": "xod-project/Patch"
     }
-  },
-  "@@type": "xod-project/Project"
+  }
 }

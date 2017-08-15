@@ -15,7 +15,6 @@
   {
     "path": "./awesome-project/project.xod",
     "content": {
-      "@@type": "xod-project/Project",
       "authors": [
         "Amperka team"
       ],

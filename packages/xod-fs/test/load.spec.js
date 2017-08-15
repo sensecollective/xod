@@ -35,7 +35,6 @@ describe('Loader', () => {
           {
             path: path.resolve(workspace, projectPath),
             content: {
-              '@@type': 'xod-project/Project',
               authors: [
                 'Amperka team',
               ],

@@ -7,6 +7,7 @@ import { def } from './types';
 export const convertProjectToProjectFileContents = def(
   'convertProjectToProjectFileContents :: Project -> ProjectFileContents',
   R.compose(
+    R.dissoc('@@type'),
     R.dissoc('patches'),
     R.dissoc('impls'),
     R.dissoc('attachments')
@@ -16,6 +17,7 @@ export const convertProjectToProjectFileContents = def(
 export const convertProjectFileContentsToProject = def(
   'convertProjectFileContentsToProject :: ProjectFileContents -> Project',
   R.compose(
+    R.assoc('@@type', 'xod-project/Project'),
     R.assoc('patches', {}),
     R.assoc('attachments', []),
     R.assoc('impls', {})
@@ -25,6 +27,7 @@ export const convertProjectFileContentsToProject = def(
 export const convertPatchToPatchFileContents = def(
   'convertPatchToPatchFileContents :: Patch -> PatchFileContents',
   R.compose(
+    R.dissoc('@@type'),
     R.dissoc('attachments'),
     R.dissoc('impls'),
     R.dissoc('path'),
@@ -55,7 +58,6 @@ const optionalPatchFields = {
   description: '',
 };
 
-// TODO: keep DRY
 export const addMissingOptionsToPatchFileContents = R.compose(
   R.evolve({
     nodes: R.map(XP.addMissingOptionalNodeFields),
@@ -64,7 +66,6 @@ export const addMissingOptionsToPatchFileContents = R.compose(
   R.merge(optionalPatchFields)
 );
 
-// TODO: keep DRY
 export const omitDefaultOptionsFromPatchFileContents = R.compose(
   R.evolve({
     nodes: R.map(XP.omitEmptyOptionalNodeFields),
@@ -72,9 +73,7 @@ export const omitDefaultOptionsFromPatchFileContents = R.compose(
   XF.subtractObject(optionalPatchFields)
 );
 
-// TODO: Keep DRY
 const OPTIONAL_PROJECT_FIELDS = {
-  '@@type': 'xod-project/Project',
   description: '',
   license: '',
   version: '0.0.0',
